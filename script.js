@@ -179,8 +179,10 @@ function updateLeaderboard() {
     }).catch(console.error);
 }
 
-document
-  .getElementById("leaderboard-filter")
-  .addEventListener("change", updateLeaderboard);
+document.addEventListener("DOMContentLoaded", () => {
+  document
+    .getElementById("leaderboard-filter")
+    .addEventListener("change", updateLeaderboard);
+  updateLeaderboard();
+}
 
-updateLeaderboard();
