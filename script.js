@@ -5,26 +5,28 @@ let timer;
 let userAnswers = [];
 let currentCategory = "";
 
-document.getElementById("start-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const name = document.getElementById("username").value;
-  const category = document.getElementById("category").value;
-  currentCategory = category;
-
-  const response = await fetch("questions.json");
-  const data = await response.json();
-
-  questions = shuffleArray(data[category.toLowerCase()]).slice(0, 10);
-  currentIndex = 0;
-  score = 0;
-  userAnswers = [];
-
-  document.getElementById("start-form").style.display = "none";
-  document.getElementById("quiz-container").style.display = "block";
-  document.getElementById("leaderboard").style.display = "none";
-
-  loadQuestion();
-});
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("start-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("username").value;
+    const category = document.getElementById("category").value;
+    currentCategory = category;
+  
+    const response = await fetch("questions.json");
+    const data = await response.json();
+  
+    questions = shuffleArray(data[category.toLowerCase()]).slice(0, 10);
+    currentIndex = 0;
+    score = 0;
+    userAnswers = [];
+  
+    document.getElementById("start-form").style.display = "none";
+    document.getElementById("quiz-container").style.display = "block";
+    document.getElementById("leaderboard").style.display = "none";
+  
+    loadQuestion();
+  });
+}
 
 function loadQuestion() {
   if (currentIndex >= questions.length) return showResult();
