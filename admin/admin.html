@@ -13,10 +13,10 @@
 
             <div id="category-screen" class="screen">
                 <p>Please select a category</p>
-                <button class="category-btn" data-category="JavaScript Fundamentals">JavaScript Fundamentals</button>
-                <button class="category-btn" data-category="Backend Concepts">Backend Concepts</button>
-                <button class="category-btn" data-category="Relational Databases">Relational Databases</button>
-                <button class="category-btn" data-category="Artificial Intelligence">Artificial Intelligence</button>
+                <button class="category-btn" data-category="JavaScript Fundamentals">JavaScript</button>
+                <button class="category-btn" data-category="Backend Concepts">Backend</button>
+                <button class="category-btn" data-category="Relational Databases">Databases</button>
+                <button class="category-btn" data-category="Artificial Intelligence">AI</button>
             </div>
 
             <div id="options-screen" class="screen hidden">
@@ -32,7 +32,7 @@
                 <form id="number-form">
                     <p>Please enter the number of questions you would like the quiz to ask</p>
                     <label for="number-of-questions">Number of questions</label>
-                    <input type="number" id="number-of-questions" min="1">
+                    <input type="number" id="number-of-questions" min="1" required>
                     <input type="submit" class="submit-btn" value="Submit">
                 </form>
             </div>
@@ -40,22 +40,22 @@
             <div id="add-question-screen" class="screen hidden">
                 <form id="add-question">
                     <label for="question">Question:</label>
-                    <input type="text" id="question" />
+                    <input type="text" id="question" required>
 
                     <label for="option-1">Option 1:</label>
-                    <input type="text" id="option-1" />
+                    <input type="text" id="option-1" required>
 
                     <label for="option-2">Option 2:</label>
-                    <input type="text" id="option-2" />
+                    <input type="text" id="option-2" required>
 
                     <label for="option-3">Option 3:</label>
-                    <input type="text" id="option-3" />
+                    <input type="text" id="option-3" required>
 
                     <label for="option-4">Option 4:</label>
-                    <input type="text" id="option-4" />
+                    <input type="text" id="option-4" required>
 
                     <label for="correct-answer">Correct Answer:</label>
-                    <input type="text" id="correct-answer" />
+                    <input type="text" id="correct-answer" required>
 
                     <input id="add-qstn-btn" type="submit" value="Add">
                 </form>
