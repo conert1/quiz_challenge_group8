@@ -5,28 +5,28 @@ let timer;
 let userAnswers = [];
 let currentCategory = "";
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("start-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const name = document.getElementById("username").value;
-    const category = document.getElementById("category").value;
-    currentCategory = category;
-  
-    const response = await fetch("questions.json");
-    const data = await response.json();
-  
-    questions = shuffleArray(data[category.toLowerCase()]).slice(0, 10);
-    currentIndex = 0;
-    score = 0;
-    userAnswers = [];
-  
-    document.getElementById("start-form").style.display = "none";
-    document.getElementById("quiz-container").style.display = "block";
-    document.getElementById("leaderboard").style.display = "none";
-  
-    loadQuestion();
-  });
-}
+
+document.getElementById("start-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const name = document.getElementById("username").value;
+  const category = document.getElementById("category").value;
+  currentCategory = category;
+
+  const response = await fetch("questions.json");
+  const data = await response.json();
+
+  questions = shuffleArray(data[category.toLowerCase()]).slice(0, 10);
+  currentIndex = 0;
+  score = 0;
+  userAnswers = [];
+
+  document.getElementById("start-form").style.display = "none";
+  document.getElementById("quiz-container").style.display = "block";
+  document.getElementById("leaderboard").style.display = "none";
+
+  loadQuestion();
+});
+
 
 function loadQuestion() {
   if (currentIndex >= questions.length) return showResult();
@@ -150,41 +150,36 @@ function shuffleArray(arr) {
 
 function saveHighScore(score) {
   const name = document.getElementById("username").value;
-  db.collection("scores").add({
-    name,
-    score,
-    category: currentCategory,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-  }).then(() => {
-    updateLeaderboard();
-  }).catch(console.error);
+  const scores = JSON.parse(localStorage.getItem("highScores") || "[]");
+  scores.push({ name, score, category: currentCategory });
+  const sorted = scores.sort((a, b) => b.score - a.score).slice(0, 50);
+  localStorage.setItem("highScores", JSON.stringify(sorted));
+  updateLeaderboard();
 }
 
 function updateLeaderboard() {
   const filter = document.getElementById("leaderboard-filter").value;
   const list = document.getElementById("leaderboard-list");
+  const scores = JSON.parse(localStorage.getItem("highScores") || "[]");
   list.innerHTML = "";
 
-  db.collection("scores")
-    .orderBy("score", "desc")
-    .limit(50)
-    .get()
-    .then(snapshot => {
-      snapshot.docs
-        .map(doc => doc.data())
-        .filter(entry => filter === "all" || entry.category === filter)
-        .forEach(({ name, score, category }) => {
-          const li = document.createElement("li");
-          li.textContent = `${name} - ${score} (${category})`;
-          list.appendChild(li);
-        });
-    }).catch(console.error);
+  scores
+    .filter((entry) => {
+      if (filter === "all") return true;
+      return entry.category === filter;
+    })
+    .forEach(({ name, score, category }) => {
+      const li = document.createElement("li");
+      li.textContent = `${name} - ${score} (${category})`;
+      list.appendChild(li);
+    });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  document
-    .getElementById("leaderboard-filter")
-    .addEventListener("change", updateLeaderboard);
-  updateLeaderboard();
-}
+
+document
+  .getElementById("leaderboard-filter")
+  .addEventListener("change", updateLeaderboard);
+
+updateLeaderboard();
+
 
