@@ -14,7 +14,7 @@ document.getElementById("start-form").addEventListener("submit", async (e) => {
   const response = await fetch("questions.json");
   const data = await response.json();
 
-  questions = shuffleArray(data[category]).slice(0, 10);
+  questions = shuffleArray(data[category.toLowerCase()]).slice(0, 10);
   currentIndex = 0;
   score = 0;
   userAnswers = [];
@@ -34,11 +34,11 @@ function loadQuestion() {
   const list = document.getElementById("answers-list");
   list.innerHTML = "";
 
-  shuffleArray(q.answers).forEach((answer) => {
+  shuffleArray(q.options).forEach((option) => {
     const li = document.createElement("li");
-    li.textContent = answer;
+    li.textContent = option;
     li.addEventListener("click", () => {
-      handleAnswer(answer, q);
+      handleAnswer(option, q);
     });
     list.appendChild(li);
   });
@@ -54,7 +54,7 @@ function handleAnswer(selected, question) {
 
   userAnswers.push({
     question: question.question,
-    answers: question.answers,
+    options: question.options,
     correct: question.correct,
     userAnswer: selected,
   });
@@ -76,13 +76,13 @@ function showResult() {
     q.textContent = `${i + 1}. ${entry.question}`;
     container.appendChild(q);
 
-    entry.answers.forEach((ans) => {
+    entry.options.forEach((opt) => {
       const li = document.createElement("div");
-      li.textContent = ans;
+      li.textContent = opt;
       li.classList.add("answer-review");
 
-      if (ans === entry.correct) li.classList.add("correct");
-      if (ans === entry.userAnswer && ans !== entry.correct)
+      if (opt === entry.correct) li.classList.add("correct");
+      if (opt === entry.userAnswer && opt !== entry.correct)
         li.classList.add("wrong");
 
       container.appendChild(li);
@@ -168,7 +168,7 @@ function updateLeaderboard() {
     })
     .forEach(({ name, score, category }) => {
       const li = document.createElement("li");
-      li.textContent = `${name} - ${score} (${category.toUpperCase()})`;
+      li.textContent = `${name} - ${score} (${category})`;
       list.appendChild(li);
     });
 }
