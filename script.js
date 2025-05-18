@@ -1,10 +1,33 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  orderBy,
+  serverTimestamp,
+  limit
+} from "https://www.gstatic.com/firebasejs/11.7.3/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDXboWWLo5RNaAMq_aFgU3ihOX5Pj-CmVY",
+  authDomain: "tech-quiz-app-4d17a.firebaseapp.com",
+  projectId: "tech-quiz-app-4d17a",
+  storageBucket: "tech-quiz-app-4d17a.firebasestorage.app",
+  messagingSenderId: "230205186325",
+  appId: "1:230205186325:web:6da85abe3d5d8c1e92491c"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 let questions = [];
 let currentIndex = 0;
 let score = 0;
 let timer;
 let userAnswers = [];
 let currentCategory = "";
-
 
 document.getElementById("start-form").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -26,7 +49,6 @@ document.getElementById("start-form").addEventListener("submit", async (e) => {
 
   loadQuestion();
 });
-
 
 function loadQuestion() {
   if (currentIndex >= questions.length) return showResult();
@@ -139,7 +161,7 @@ function startTimer() {
     timerEl.textContent = timeLeft;
     if (timeLeft <= 0) {
       clearInterval(timer);
-      handleAnswer("", questions[currentIndex]); // treat as skipped
+      handleAnswer("", questions[currentIndex]);
     }
   }, 1000);
 }
@@ -150,36 +172,38 @@ function shuffleArray(arr) {
 
 function saveHighScore(score) {
   const name = document.getElementById("username").value;
-  const scores = JSON.parse(localStorage.getItem("highScores") || "[]");
-  scores.push({ name, score, category: currentCategory });
-  const sorted = scores.sort((a, b) => b.score - a.score).slice(0, 50);
-  localStorage.setItem("highScores", JSON.stringify(sorted));
-  updateLeaderboard();
+  addDoc(collection(db, "scores"), {
+    name,
+    score,
+    category: currentCategory,
+    timestamp: serverTimestamp(),
+  })
+    .then(() => updateLeaderboard())
+    .catch(console.error);
 }
 
-function updateLeaderboard() {
+async function updateLeaderboard() {
   const filter = document.getElementById("leaderboard-filter").value;
   const list = document.getElementById("leaderboard-list");
-  const scores = JSON.parse(localStorage.getItem("highScores") || "[]");
   list.innerHTML = "";
 
-  scores
-    .filter((entry) => {
-      if (filter === "all") return true;
-      return entry.category === filter;
-    })
-    .forEach(({ name, score, category }) => {
+  const q = query(collection(db, "scores"), orderBy("score", "desc"), limit(50));
+  const snapshot = await getDocs(q);
+  snapshot.forEach(doc => {
+    const { name, score, category } = doc.data();
+    if (filter === "all" || category === filter) {
       const li = document.createElement("li");
       li.textContent = `${name} - ${score} (${category})`;
       list.appendChild(li);
-    });
+    }
+  });
 }
-
 
 document
   .getElementById("leaderboard-filter")
   .addEventListener("change", updateLeaderboard);
 
 updateLeaderboard();
+
 
 
