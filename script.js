@@ -12,8 +12,6 @@ import {
   limit
 } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-firestore.js";
 
-// 🔐 Replace these with your actual Firebase config
-
 const firebaseConfig = {
   apiKey: "AIzaSyDXboWWLo5RNaAMq_aFgU3ihOX5Pj-CmVY",
   authDomain: "tech-quiz-app-4d17a.firebaseapp.com",
