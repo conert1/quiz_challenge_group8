@@ -218,7 +218,3 @@ document
   .addEventListener("change", updateLeaderboard);
 
 updateLeaderboard();
-
-
-
-
