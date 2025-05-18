@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
             categoryTitle.textContent = category;
             categoryScreen.classList.add("hidden");
             optionsScreen.classList.remove("hidden");
+            backBtn.classList.remove("hidden");
         });
     });
 
@@ -42,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
         optionButtons.classList.remove("hidden");
         addQuestionScreen.classList.add("hidden");
         confirmationMsg.textContent = "";
+        backBtn.classList.add("hidden");
     });
 
     const numberForm = document.getElementById("number-form");

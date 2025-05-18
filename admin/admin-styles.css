@@ -17,8 +17,13 @@ h1 {
     font-size: 2rem;
 }
 
-.screen {
+.screen,
+.back-btn {
     display: none;
+}
+
+.back-btn:not(.hidden) {
+    display: inline;
 }
 
 .screen:not(.hidden) {
@@ -48,7 +53,6 @@ input[type=submit] {
 
 .set-btn,
 .add-btn,
-.del-btn,
 .submit-btn,
 .submit-qstn,
 #add-qstn-btn,
@@ -75,7 +79,8 @@ input[type=submit] {
     background-color: #495057;
 }
 
-#add-question-screen {
+#add-question-screen,
+#set-questions-screen {
     width: 100%;
     max-width: 600px;
     margin: auto;
@@ -97,7 +102,7 @@ label {
     font-weight: bold;
 }
 
-input[type="text"],
+textarea,
 input[type="number"] {
     padding: 12px;
     border: 1px solid #ccc;
@@ -110,6 +115,10 @@ input[type="number"] {
     margin-top: 20px;
     font-weight: bold;
     color: #28a745;
+}
+
+#set-questions-screen h1, h2, p {
+    padding: 20px;
 }
 
 @media (max-width: 768px) {

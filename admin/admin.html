@@ -28,7 +28,7 @@
             </div>
 
             <div id="set-questions-screen" class="screen hidden">
-                <h3>Set Number of Questions</h3>
+                <h2>Set Number of Questions</h2>
                 <form id="number-form">
                     <p>Please enter the number of questions you would like the quiz to ask</p>
                     <label for="number-of-questions">Number of questions</label>
@@ -40,22 +40,22 @@
             <div id="add-question-screen" class="screen hidden">
                 <form id="add-question">
                     <label for="question">Question:</label>
-                    <input type="text" id="question" required>
+                    <textarea name="question" id="question" required></textarea>
 
                     <label for="option-1">Option 1:</label>
-                    <input type="text" id="option-1" required>
+                    <textarea name="option-1" id="option-1" required></textarea>
 
                     <label for="option-2">Option 2:</label>
-                    <input type="text" id="option-2" required>
+                    <textarea name="option-2" id="option-2" required></textarea>
 
                     <label for="option-3">Option 3:</label>
-                    <input type="text" id="option-3" required>
+                    <textarea name="option-3" id="option-3" required></textarea>
 
                     <label for="option-4">Option 4:</label>
-                    <input type="text" id="option-4" required>
+                    <textarea name="option-4" id="option-4" required></textarea>
 
                     <label for="correct-answer">Correct Answer:</label>
-                    <input type="text" id="correct-answer" required>
+                    <textarea name="correct-answer" id="correct-answer"required></textarea>
 
                     <input id="add-qstn-btn" type="submit" value="Add">
                 </form>
@@ -63,7 +63,7 @@
             
             <p id="confirm-msg"></p>
 
-            <button id="back-btn" class="back-btn">Back to Categories</button>
+            <button id="back-btn" class="back-btn hidden">Back to Categories</button>
         </main>
     </div>
 
