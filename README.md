@@ -1,9 +1,11 @@
-# quiz_challenge_group8
-BBD_Challenge
-
 # Tech Quiz App
 
 An interactive web-based quiz app built with **HTML**, **CSS**, **JavaScript**, and **Firebase**. Users can choose a quiz category, answer timed questions, and view a real-time leaderboard. Great for testing your knowledge in tech domains like JavaScript, Backend, Databases, and AI!
+
+
+## 🚀 Live Demo
+🔗 User App: https://conert1.github.io/quiz_challenge_group8/tech-quiz-app/
+
 
 ## Features
 
@@ -13,6 +15,7 @@ An interactive web-based quiz app built with **HTML**, **CSS**, **JavaScript**, 
 -  Instant feedback on answers
 -  Leaderboard with filter by category
 -  Firebase Firestore integration for real-time data
+ 
  
 ## Technologies Used
 
